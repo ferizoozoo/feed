@@ -1,0 +1,22 @@
+.root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+.button {
+  background-color: lightgreen;
+  color: black;
+  box-shadow: none !important;
+  margin: 15px auto;
+}
