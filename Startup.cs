@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using feed.Infrastructure;
+using feed.Services;
 
 namespace feed
 {
@@ -26,6 +27,7 @@ namespace feed
                 options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
 
             services.AddControllersWithViews();
+            services.AddTransient<IUserService, UserService>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

@@ -9,6 +9,7 @@ using feed.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using feed.Dtos;
 using feed.Models;
+using feed.Services;
 using Microsoft.AspNetCore.Http;
 
 namespace feed.Controllers
@@ -17,18 +18,18 @@ namespace feed.Controllers
     [Route("[controller]/[action]")]
     public class UserController : ControllerBase
     {
-        private readonly FeedDbContext _context;
+        private readonly IUserService _userService;
 
-        public UserController(FeedDbContext context)
+        public UserController(IUserService userService)
         {
-            _context = context;
+            _userService = userService;
         }
 
-        // [HttpPost]
-        // public async Task<IActionResult> Register(RegisterUserDto registerUserModel)
-        // {
-
-        // }
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterUserDto registerUserModel)
+        {
+            return Ok(await _userService.Register(registerUserModel));
+        }
 
         // [HttpPost]
         // public async Task<IActionResult> Login(LoginUserDto loginUserModel)
