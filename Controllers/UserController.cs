@@ -31,11 +31,16 @@ namespace feed.Controllers
             return Ok(await _userService.Register(registerUserModel));
         }
 
-        // [HttpPost]
-        // public async Task<IActionResult> Login(LoginUserDto loginUserModel)
-        // {
-            
-        // }
+        [HttpPost]
+        public IActionResult Login(LoginUserDto loginUserModel)
+        {
+            var token = _userService.Authenticate(loginUserModel);
+
+            if (string.IsNullOrEmpty(token))
+                return BadRequest();
+
+            return Ok(token);    
+        }
 
         // [HttpPost]
         // public async Task<IActionResult> Logout()
