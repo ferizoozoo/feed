@@ -8,5 +8,6 @@ namespace feed.Services
     {
         Task<int> Register(RegisterUserDto registerUserModel);
         string Authenticate(LoginUserDto loginUserModel);
+        Task<User> GetById(int userId);
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using feed.Infrastructure;
 using feed.Services;
+using feed.Middlewares;
 
 namespace feed
 {
@@ -49,6 +50,8 @@ namespace feed
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

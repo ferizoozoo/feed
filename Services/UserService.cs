@@ -76,5 +76,10 @@ namespace feed.Services
 
             return await _context.SaveChangesAsync();
         }
+
+        public async Task<User> GetById(int userId)
+        {
+            return await _context.Users.FindAsync(userId);
+        }
     }
 }
