@@ -5,6 +5,7 @@ import Home from "./components/Home";
 
 import "./custom.css";
 import SendPost from "./components/SendPost";
+import Login from "./components/Login";
 
 export default class App extends Component {
   static displayName = App.name;
@@ -14,6 +15,7 @@ export default class App extends Component {
       <Layout>
         <Route exact path="/" component={Home} />
         <Route exact path="/sendPost" component={SendPost} />
+        <Route exact path="/user/login" component={Login} />
       </Layout>
     );
   }
