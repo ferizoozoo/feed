@@ -1,0 +1,17 @@
+.root-login {
+    background-color: #c4c4c4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .login-form {
+    background-color: #c2e4b6;
+  }
+  .form-title {
+  }
+  .form-inputs {
+  }
+  .form-input {
+    background-color: #efe9e9;
+  }
+  

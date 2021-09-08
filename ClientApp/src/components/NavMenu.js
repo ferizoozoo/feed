@@ -62,6 +62,11 @@ export class NavMenu extends Component {
                     Login
                   </NavLink>
                 </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/user/register">
+                    Register
+                  </NavLink>
+                </NavItem>
               </ul>
             </Collapse>
           </Container>

@@ -59,7 +59,14 @@ namespace feed.Services
             if (user is null)
                 return null;
 
-            return GenerateToken(user);    
+            user.LastLogin = DateTime.Now;
+            _context.Users.Update(user);
+
+            _context.SaveChanges();    
+
+            var token = GenerateToken(user);
+
+            return token;    
         }
 
         public async Task<int> Register(RegisterUserDto registerUserModel)
