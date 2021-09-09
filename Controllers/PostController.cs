@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Reflection.Metadata;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using feed.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using feed.Dtos;
 using feed.Models;
+using feed.Filters;
 using Microsoft.AspNetCore.Http;
 
 namespace feed.Controllers
@@ -30,6 +32,7 @@ namespace feed.Controllers
             return Ok(await _context.Posts.OrderByDescending(x => x.CreatedAt).ToListAsync());
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> SendPost(SendPostDto model)
         {
@@ -53,6 +56,7 @@ namespace feed.Controllers
             return Ok(newPost.Id);
         }
 
+        [Authorize]
         [HttpDelete]
         public async Task<IActionResult> DeletePost(int postId)
         {
