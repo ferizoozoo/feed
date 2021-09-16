@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import addTokenHeader from "../utilities/interceptor";
+import postService from "../services/postService";
 
 import "./SendPost.css";
 
@@ -18,17 +18,7 @@ const SendPost = () => {
       content,
     };
 
-    let token = addTokenHeader();
-
-    const res = await fetch("https://localhost:45654/post/SendPost", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(post),
-    });
+    const res = await postService.sendPost(post);
 
     setContent("");
 

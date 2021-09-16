@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import postService from "../services/postService";
 import "./Home.css";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
 
   const _getAllPosts = async () => {
-    const res = await fetch("https://localhost:45654/post/GetListOfAllPosts");
+    const res = await postService.getListOfAllPosts();
     const data = await res.json();
     setPosts(data);
   };

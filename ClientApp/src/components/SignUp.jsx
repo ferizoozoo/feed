@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import authService from "../services/authService";
+import customFetch from "../utilities/interceptor";
 
 import "./SignUp.css";
 
@@ -23,17 +25,10 @@ const SignUp = () => {
     const post = {
       username,
       password,
-      email
+      email,
     };
 
-    const res = await fetch("https://localhost:45654/user/register", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(post),
-    });
+    const res = authService.register(post);
 
     //localStorage.setItem("Token")
 

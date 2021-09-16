@@ -1,15 +1,16 @@
+import customFetch from "../utilities/interceptor";
+
 export default class authService {
   static async login(credentials) {
-    const res = await fetch("https://localhost:45654/user/login", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(credentials),
-    });
+    const res = await customFetch(
+      "POST",
+      "https://localhost:45654/user/login",
+      credentials
+    );
 
-    localStorage.setItem("user", await res.json());
+    const token = await res.json();
+
+    if (res.status == "200") localStorage.setItem("user", token);
   }
 
   static isAuthenticated() {
@@ -18,5 +19,13 @@ export default class authService {
 
   static logout() {
     localStorage.setItem("user", null);
+  }
+
+  static async register(credentials) {
+    return await customFetch(
+      "POST",
+      "https://localhost:45654/user/register",
+      credentials
+    );
   }
 }
