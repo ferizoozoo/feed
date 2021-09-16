@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import authService from "../services/authService";
 
 import "./Login.css";
 
@@ -18,21 +19,12 @@ const Login = () => {
   const _handleSubmit = async () => {
     if (username == "" || password == "") return;
 
-    const post = {
+    const credentials = {
       username,
       password,
     };
 
-    const res = await fetch("https://localhost:45654/user/login", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(post),
-    });
-
-    localStorage.setItem("user", await res.json());
+    const res = authService.login(credentials);
 
     setUsername("");
     setPassword("");
