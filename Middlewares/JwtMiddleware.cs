@@ -14,11 +14,13 @@ namespace feed.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly IConfiguration _config;
+        private readonly IJwtService _jwtService;
 
-        public JwtMiddleware(RequestDelegate next, IConfiguration config)
+        public JwtMiddleware(RequestDelegate next, IConfiguration config, IJwtService jwtService)
         {
             _next = next;
             _config = config;
+            _jwtService = jwtService;
         }
 
         public async Task InvokeAsync(HttpContext context, IUserService userService)
@@ -27,20 +29,8 @@ namespace feed.Middlewares
 
             if (token is not null)
             {
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_config["Secret"]);
-
-                tokenHandler.ValidateToken(token, new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ClockSkew = TimeSpan.Zero
-                }, out SecurityToken validatedToken);
-
-                var jwtToken = (JwtSecurityToken)validatedToken;
-                var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
+                var userClaims = _jwtService.GetClaims(token);
+                var userId = int.Parse(userClaims.First(x => x.Type == "id").Value);
 
                 context.Items["User"] = await userService.GetById(userId);
             }

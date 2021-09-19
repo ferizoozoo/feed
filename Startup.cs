@@ -36,6 +36,7 @@ namespace feed
 
             services.AddControllersWithViews();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IJwtService, JwtService>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

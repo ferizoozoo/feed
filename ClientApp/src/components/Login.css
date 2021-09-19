@@ -1,11 +1,14 @@
 .root-login {
-  background-color: #c4c4c4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: #c4c4c4 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  height: 100%;
+  width: 100%;
 }
 .login-form {
   background-color: #c2e4b6;
+  padding: 10px;
 }
 .form-title {
 }

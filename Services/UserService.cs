@@ -17,37 +17,13 @@ namespace feed.Services
     {
         private readonly FeedDbContext _context;
         private readonly IConfiguration _config;
+        private readonly IJwtService _jwtService;
 
-        public UserService(FeedDbContext context, IConfiguration config)
+        public UserService(FeedDbContext context, IConfiguration config, IJwtService jwtService)
         {
             _context = context;
             _config = config;
-        }
-
-        private string GenerateToken(User user)
-        {
-            // TODO: use JwtTokenHandler and add claims to it, create token 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_config["Secret"]);
-
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(
-                    new[] 
-                    {
-                        new Claim("id", user.Id.ToString()),
-                        new Claim("username", user.Username.ToString()),
-                        new Claim("password", user.Password.ToString()),
-                        new Claim("email", user.Email.ToString()),
-                        new Claim("createdAt", user.CreatedAt.ToString()),
-                        new Claim("lastLogin", user.LastLogin.ToString())
-                    }
-                ),
-                Expires = DateTime.UtcNow.AddHours(8),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            _jwtService = jwtService;
         }
 
         public string Authenticate(LoginUserDto loginUserModel)
@@ -64,9 +40,7 @@ namespace feed.Services
 
             _context.SaveChanges();    
 
-            var token = GenerateToken(user);
-
-            return token;    
+            return _jwtService.GenerateToken(user.Id);
         }
 
         public async Task<int> Register(RegisterUserDto registerUserModel)
