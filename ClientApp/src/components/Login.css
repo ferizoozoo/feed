@@ -1,19 +1,43 @@
 .root-login {
-  background-color: #c4c4c4 !important;
+  background-color: #d0b4b4 !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
   height: 100%;
   width: 100%;
 }
+
 .login-form {
-  background-color: #c2e4b6;
+  background-color: #daf9cfad;
   padding: 10px;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
+
 .form-title {
+  font-size: 23px;
+  margin: 80px;
+  font-weight: 700;
 }
+
 .form-inputs {
+  padding: 20px;
 }
+
 .form-input {
   background-color: #efe9e9;
+  margin: 10px;
+}
+
+.input {
+  border: none;
+  border-radius: 5px;
+}
+
+.button {
+  border: none;
+  border-radius: 8px;
 }

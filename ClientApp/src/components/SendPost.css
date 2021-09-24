@@ -1,7 +1,8 @@
-.root {
+.root-sendPost {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
 }
 
 .form {

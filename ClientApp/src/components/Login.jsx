@@ -1,9 +1,13 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router";
 import authService from "../services/authService";
 
 import "./Login.css";
 
 const Login = () => {
+  // useHistory
+  const history = useHistory();
+
   // Hooks
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -28,15 +32,22 @@ const Login = () => {
 
     setUsername("");
     setPassword("");
+
+    history.replace("/");
+  };
+
+  const _handleEnterKeyPress = (e) => {
+    if (e.key === "Enter") _handleSubmit();
   };
 
   return (
     <div className="root-login">
       <div className="login-form">
-        <h4 className="form-title">Login</h4>
+        <div className="form-title">Login</div>
         <div className="form-inputs">
           <div className="form-input">
             <input
+              className="input"
               name="username"
               value={username}
               placeholder="Username"
@@ -45,14 +56,16 @@ const Login = () => {
           </div>
           <div className="form-input">
             <input
+              className="input"
               name="password"
               value={password}
               placeholder="Password"
               onChange={_handleChange}
+              onKeyPress={_handleEnterKeyPress}
             />
           </div>
         </div>
-        <button type="submit" onClick={_handleSubmit}>
+        <button className="button" type="submit" onClick={_handleSubmit}>
           Login
         </button>
       </div>

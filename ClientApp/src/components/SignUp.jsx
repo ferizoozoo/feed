@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router";
 import authService from "../services/authService";
-import customFetch from "../utilities/interceptor";
 
 import "./SignUp.css";
 
 const SignUp = () => {
+  // useHistory
+  const history = useHistory();
+
   // Hooks
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -35,15 +38,18 @@ const SignUp = () => {
     setUsername("");
     setPassword("");
     setEmail("");
+
+    history.replace("/");
   };
 
   return (
-    <div className="root-login">
-      <div className="login-form">
+    <div className="root-signUp">
+      <div className="signUp-form">
         <h4 className="form-title">SignUp</h4>
         <div className="form-inputs">
           <div className="form-input">
             <input
+              className="input"
               name="username"
               value={username}
               placeholder="Username"
@@ -52,6 +58,7 @@ const SignUp = () => {
           </div>
           <div className="form-input">
             <input
+              className="input"
               name="password"
               value={password}
               placeholder="Password"
@@ -60,6 +67,7 @@ const SignUp = () => {
           </div>
           <div className="form-input">
             <input
+              className="input"
               name="email"
               value={email}
               placeholder="Email"
@@ -67,8 +75,8 @@ const SignUp = () => {
             />
           </div>
         </div>
-        <button type="submit" onClick={_handleSubmit}>
-          Login
+        <button className="button" type="submit" onClick={_handleSubmit}>
+          Sign Up
         </button>
       </div>
     </div>

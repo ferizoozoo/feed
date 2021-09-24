@@ -1,17 +1,30 @@
-.root-login {
-    background-color: #c4c4c4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .login-form {
-    background-color: #c2e4b6;
-  }
-  .form-title {
-  }
-  .form-inputs {
-  }
-  .form-input {
-    background-color: #efe9e9;
-  }
-  
+.root-signUp {
+  background-color: #c4c4c4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signUp-form {
+  background-color: #c2e4b6;
+  padding: 10px;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-title {
+  font-size: 23px;
+  margin: 80px;
+  font-weight: 700;
+}
+
+.form-inputs {
+  padding: 20px;
+}
+
+.form-input {
+  background-color: #efe9e9;
+}

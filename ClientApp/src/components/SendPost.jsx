@@ -1,9 +1,14 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router";
 import postService from "../services/postService";
 
 import "./SendPost.css";
 
 const SendPost = () => {
+  // useHistory
+  const history = useHistory();
+
+  // Hooks
   const [content, setContent] = useState("");
 
   const _handleChange = (e) => {
@@ -21,8 +26,7 @@ const SendPost = () => {
     const res = await postService.sendPost(post);
 
     setContent("");
-
-    alert("New feed added");
+    history.replace("/");
   };
 
   const _handleEnterPress = (e) => {
@@ -31,10 +35,11 @@ const SendPost = () => {
   };
 
   return (
-    <div className="root">
+    <div className="root-sendPost">
       <div className="form">
-        <input
-          type="text"
+        <textarea
+          rows="4"
+          cols="50"
           id="content"
           name="content"
           value={content}
