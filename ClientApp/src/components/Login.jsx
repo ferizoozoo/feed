@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
+import { useSetRecoilState } from "recoil";
 import authService from "../services/authService";
+import authAtom from "../states/authAtom";
 
 import "./Login.css";
 
@@ -11,6 +13,9 @@ const Login = () => {
   // Hooks
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  // Recoil
+  const setAuthenticated = useSetRecoilState(authAtom);
 
   const _handleChange = (e) => {
     const name = e.target.name;
@@ -29,6 +34,7 @@ const Login = () => {
     };
 
     const res = authService.login(credentials);
+    setAuthenticated(true);
 
     setUsername("");
     setPassword("");

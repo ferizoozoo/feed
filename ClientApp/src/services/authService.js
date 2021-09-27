@@ -18,7 +18,7 @@ export default class authService {
   }
 
   static logout() {
-    localStorage.setItem("user", null);
+    localStorage.removeItem("user");
   }
 
   static async register(credentials) {

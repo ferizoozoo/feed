@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   Collapse,
   Container,
@@ -10,68 +10,84 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import "./NavMenu.css";
+import { useRecoilState, useRecoilValue } from "recoil";
+import authAtom from "../states/authAtom";
+import authService from "../services/authService";
 
-export class NavMenu extends Component {
-  static displayName = NavMenu.name;
+export const NavMenu = (props) => {
+  // Hooks
+  const [collapsed, setCollapsed] = useState(true);
 
-  constructor(props) {
-    super(props);
+  // Recoil
+  const [isAuthenticated, setIsAuthenticated] = useRecoilState(authAtom);
 
-    this.toggleNavbar = this.toggleNavbar.bind(this);
-    this.state = {
-      collapsed: true,
-    };
-  }
+  const toggleNavbar = () => {
+    setCollapsed((p) => !p);
+  };
 
-  toggleNavbar() {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
-  }
+  const _handleLogout = () => {
+    authService.logout();
+    setIsAuthenticated(false);
+  };
 
-  render() {
-    return (
-      <header>
-        <Navbar
-          className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3"
-          light
-        >
-          <Container>
-            <NavbarBrand tag={Link} to="/">
-              feed
-            </NavbarBrand>
-            <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-            <Collapse
-              className="d-sm-inline-flex flex-sm-row-reverse"
-              isOpen={!this.state.collapsed}
-              navbar
-            >
-              <ul className="navbar-nav flex-grow">
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/">
-                    Home
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/sendPost">
-                    New Post
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/user/login">
-                    Login
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/user/register">
-                    Register
-                  </NavLink>
-                </NavItem>
-              </ul>
-            </Collapse>
-          </Container>
-        </Navbar>
-      </header>
-    );
-  }
-}
+  return (
+    <header>
+      <Navbar
+        className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3"
+        light
+      >
+        <Container>
+          <NavbarBrand tag={Link} to="/">
+            feed
+          </NavbarBrand>
+          <NavbarToggler onClick={toggleNavbar} className="mr-2" />
+          <Collapse
+            className="d-sm-inline-flex flex-sm-row-reverse"
+            isOpen={!collapsed}
+            navbar
+          >
+            <ul className="navbar-nav flex-grow">
+              <NavItem>
+                <NavLink tag={Link} className="text-dark" to="/">
+                  Home
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={Link} className="text-dark" to="/sendPost">
+                  New Post
+                </NavLink>
+              </NavItem>
+              {!isAuthenticated ? (
+                <>
+                  <NavItem>
+                    <NavLink tag={Link} className="text-dark" to="/user/login">
+                      Login
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                      tag={Link}
+                      className="text-dark"
+                      to="/user/register"
+                    >
+                      Register
+                    </NavLink>
+                  </NavItem>
+                </>
+              ) : (
+                <NavLink
+                  tag={Link}
+                  className="text-dark"
+                  to="/user/login"
+                  onClick={_handleLogout}
+                >
+                  Logout
+                </NavLink>
+              )}
+            </ul>
+          </Collapse>
+        </Container>
+      </Navbar>
+    </header>
+  );
+};
