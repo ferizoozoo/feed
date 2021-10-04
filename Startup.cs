@@ -39,6 +39,7 @@ namespace feed
             services.AddControllersWithViews();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IPostService, PostService>();
             services.AddTransient<IJwtService, JwtService>();
 
             // In production, the React files will be served from this directory

@@ -32,13 +32,15 @@ namespace feed.Infrastructure.Repositories.Implements
         // TODO: Should implement multiple includes later
         public List<T> GetAll(Expression<Func<T, object>> orderBy = null, bool isDescending = false)
         {
-            return _entitySet.OrderBy(orderBy).ToList();
+            var queryable = isDescending ? _entitySet.OrderByDescending(orderBy) : _entitySet.OrderByDescending(orderBy);
+            return queryable.ToList();
         }
 
         // TODO: Should implement multiple includes later
         public async Task<List<T>> GetAllAsync(Expression<Func<T, object>> orderBy = null, bool isDescending = false)
         {
-            return await _entitySet.OrderBy(orderBy).ToListAsync();
+            var queryable = isDescending ? _entitySet.OrderByDescending(orderBy) : _entitySet.OrderByDescending(orderBy);
+            return await queryable.ToListAsync();
         }
 
         // TODO: Should implement multiple includes later
@@ -56,13 +58,15 @@ namespace feed.Infrastructure.Repositories.Implements
         // TODO: Should implement multiple includes later
         public List<T> Find(Expression<Func<T, bool>> query, Expression<Func<T, object>> orderBy = null, bool isDescending = false)
         {
-            return _entitySet.Where(query).OrderBy(orderBy).ToList();
+            var queryable = isDescending ? _entitySet.Where(query).OrderByDescending(orderBy) : _entitySet.Where(query).OrderBy(orderBy);
+            return queryable.ToList();
         }
 
         // TODO: Should implement multiple includes later
         public async Task<List<T>> FindAsync(Expression<Func<T, bool>> query, Expression<Func<T, object>> orderBy = null, bool isDescending = false)
         {
-            return await _entitySet.Where(query).OrderBy(orderBy).ToListAsync();
+            var queryable = isDescending ? _entitySet.Where(query).OrderByDescending(orderBy) : _entitySet.Where(query).OrderBy(orderBy);
+            return await queryable.ToListAsync();
         }
 
         public void Add(T entity)
