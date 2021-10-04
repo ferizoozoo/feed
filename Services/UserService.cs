@@ -1,12 +1,7 @@
-using System.Text;
-using System.Security.Claims;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
-using feed.Infrastructure;
+using feed.Infrastructure.UnitOfWork.Interfaces;
 using feed.Dtos;
 using feed.Utility;
 using feed.Models;
@@ -15,13 +10,13 @@ namespace feed.Services
 {
     public class UserService : IUserService
     {
-        private readonly FeedDbContext _context;
+        private readonly IUnitOfWork _uow;
         private readonly IConfiguration _config;
         private readonly IJwtService _jwtService;
 
-        public UserService(FeedDbContext context, IConfiguration config, IJwtService jwtService)
+        public UserService(IUnitOfWork uow, IConfiguration config, IJwtService jwtService)
         {
-            _context = context;
+            _uow = uow;
             _config = config;
             _jwtService = jwtService;
         }
@@ -30,15 +25,15 @@ namespace feed.Services
         {
             var hashedPassword = Crypto.GenerateSha256HashOfString(loginUserModel.Password);
 
-            var user = _context.Users.Where(x => x.Username == loginUserModel.Username && x.Password == hashedPassword).FirstOrDefault();
+            var user = _uow.UserRepository.FirstOrDefault(x => x.Username == loginUserModel.Username && x.Password == hashedPassword);
 
             if (user is null)
                 return null;
 
             user.LastLogin = DateTime.Now;
-            _context.Users.Update(user);
+            _uow.UserRepository.Update(user);
 
-            _context.SaveChanges();    
+            _uow.Commit();    
 
             return _jwtService.GenerateToken(user.Id);
         }
@@ -53,14 +48,14 @@ namespace feed.Services
                 CreatedAt = DateTime.Now,
             };
 
-            await _context.Users.AddAsync(newUser);
+            await _uow.UserRepository.AddAsync(newUser);
 
-            return await _context.SaveChangesAsync();
+            return await _uow.CommitAsync();
         }
 
         public async Task<User> GetById(int userId)
         {
-            return await _context.Users.FindAsync(userId);
+            return await _uow.UserRepository.GetByIdAsync(userId);
         }
     }
 }

@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using feed.Infrastructure;
+using feed.Infrastructure.UnitOfWork.Interfaces;
+using feed.Infrastructure.UnitOfWork.Implements;
 using feed.Services;
 using feed.Middlewares;
 
@@ -35,6 +37,7 @@ namespace feed
             }));    
 
             services.AddControllersWithViews();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IJwtService, JwtService>();
 
