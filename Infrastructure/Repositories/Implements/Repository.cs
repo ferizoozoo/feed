@@ -17,45 +17,52 @@ namespace feed.Infrastructure.Repositories.Implements
             _entitySet = context.Set<T>();
         }
 
+        // TODO: Should implement multiple includes later (params Expression<Func<TEntity, object>>[] includes)
         public T GetById(int id)
         {
             return _entitySet.Find(id);
         }
 
+        // TODO: Should implement multiple includes later
         public async Task<T> GetByIdAsync(int id)
         {
             return await _entitySet.FindAsync(id);
         }
 
-        public List<T> GetAll()
+        // TODO: Should implement multiple includes later
+        public List<T> GetAll(Expression<Func<T, object>> orderBy = null, bool isDescending = false)
         {
-            return _entitySet.ToList();
+            return _entitySet.OrderBy(orderBy).ToList();
         }
 
-        public async Task<List<T>> GetAllAsync()
+        // TODO: Should implement multiple includes later
+        public async Task<List<T>> GetAllAsync(Expression<Func<T, object>> orderBy = null, bool isDescending = false)
         {
-            return await _entitySet.ToListAsync();
+            return await _entitySet.OrderBy(orderBy).ToListAsync();
         }
 
-        public T FirstOrDefault(Expression<Func<T, bool>> predicate)
+        // TODO: Should implement multiple includes later
+        public T FirstOrDefault(Expression<Func<T, bool>> query)
         {
-            return _entitySet.Where(predicate).FirstOrDefault();
+            return _entitySet.Where(query).FirstOrDefault();
         }
 
-        public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
+        // TODO: Should implement multiple includes later
+        public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> query)
         {
-            return await _entitySet.Where(predicate).FirstOrDefaultAsync();
+            return await _entitySet.Where(query).FirstOrDefaultAsync();
         }
 
-
-        public List<T> Find(Expression<Func<T, bool>> predicate)
+        // TODO: Should implement multiple includes later
+        public List<T> Find(Expression<Func<T, bool>> query, Expression<Func<T, object>> orderBy = null, bool isDescending = false)
         {
-            return _entitySet.Where(predicate).ToList();
+            return _entitySet.Where(query).OrderBy(orderBy).ToList();
         }
 
-        public async Task<List<T>> FindAsync(Expression<Func<T, bool>> predicate)
+        // TODO: Should implement multiple includes later
+        public async Task<List<T>> FindAsync(Expression<Func<T, bool>> query, Expression<Func<T, object>> orderBy = null, bool isDescending = false)
         {
-            return await _entitySet.Where(predicate).ToListAsync();
+            return await _entitySet.Where(query).OrderBy(orderBy).ToListAsync();
         }
 
         public void Add(T entity)

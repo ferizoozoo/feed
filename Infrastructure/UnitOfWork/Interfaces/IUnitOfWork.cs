@@ -7,6 +7,7 @@ namespace feed.Infrastructure.UnitOfWork.Interfaces
     public interface IUnitOfWork : IDisposable
     {
         IUserRepository UserRepository { get; }
+        IPostRepository PostRepository { get; }
         int Commit();
         Task<int> CommitAsync();
     }

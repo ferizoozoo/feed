@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using feed.Infrastructure.UnitOfWork.Interfaces;
 using feed.Dtos;
 using feed.Utility;
@@ -11,13 +10,11 @@ namespace feed.Services
     public class UserService : IUserService
     {
         private readonly IUnitOfWork _uow;
-        private readonly IConfiguration _config;
         private readonly IJwtService _jwtService;
 
-        public UserService(IUnitOfWork uow, IConfiguration config, IJwtService jwtService)
+        public UserService(IUnitOfWork uow, IJwtService jwtService)
         {
             _uow = uow;
-            _config = config;
             _jwtService = jwtService;
         }
 
