@@ -8,6 +8,8 @@ namespace feed.Infrastructure.UnitOfWork.Interfaces
     {
         IUserRepository UserRepository { get; }
         IPostRepository PostRepository { get; }
+        IPostLikeRepository PostLikeRepository { get; }
+        
         int Commit();
         Task<int> CommitAsync();
     }

@@ -20,10 +20,12 @@ namespace feed.Infrastructure.UnitOfWork.Implements
             _context = context;
             UserRepository = new UserRepository(_context);
             PostRepository = new PostRepository(_context);
+            PostLikeRepository = new PostLikeRepository(_context);
         }
 
         public IUserRepository UserRepository { get; }
         public IPostRepository PostRepository { get; }
+        public IPostLikeRepository PostLikeRepository { get; }
 
         public int Commit()
         {

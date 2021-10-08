@@ -15,4 +15,12 @@ export default class postService {
       "https://localhost:45654/post/GetListOfAllPosts"
     );
   }
+
+  static async likePost(like) {
+    return await customFetch(
+      "POST",
+      "https://localhost:45654/post/LikePost",
+      like
+    );
+  }
 }

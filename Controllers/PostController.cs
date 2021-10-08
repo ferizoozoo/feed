@@ -22,7 +22,7 @@ namespace feed.Controllers
     {
         private readonly IPostService _postService;
 
-        public PostController(FeedDbContext context, IPostService postService)
+        public PostController(IPostService postService)
         {
             _postService = postService;
         }
@@ -55,6 +55,21 @@ namespace feed.Controllers
             try
             {
                 return Ok(await _postService.DeletePost(postId));
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine(e.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> LikePost(int userId, int postId)
+        {
+            try
+            {
+                return Ok(await _postService.LikePost(userId, postId));
             }
             catch (Exception e)
             {

@@ -9,12 +9,12 @@ namespace feed.Infrastructure.Repositories.Interfaces
     {
         T GetById(int id);
         Task<T> GetByIdAsync(int id);
-        List<T> GetAll(Expression<Func<T, object>> orderBy = null, bool isDescending = false);
-        Task<List<T>> GetAllAsync(Expression<Func<T, object>> orderBy = null, bool isDescending = false);
-        T FirstOrDefault(Expression<Func<T, bool>> query);
-        Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> query);
-        List<T> Find(Expression<Func<T, bool>> query, Expression<Func<T, object>> orderBy = null, bool isDescending = false);
-        Task<List<T>> FindAsync(Expression<Func<T, bool>> query, Expression<Func<T, object>> orderBy = null, bool isDescending = false);
+        List<T> GetAll(Expression<Func<T, object>> orderBy = null, bool isDescending = false, params Expression<Func<T, object>>[] includes);
+        Task<List<T>> GetAllAsync(Expression<Func<T, object>> orderBy = null, bool isDescending = false, params Expression<Func<T, object>>[] includes);
+        T FirstOrDefault(Expression<Func<T, bool>> query, params Expression<Func<T, object>>[] includes);
+        Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> query, params Expression<Func<T, object>>[] includes);
+        List<T> Find(Expression<Func<T, bool>> query, Expression<Func<T, object>> orderBy = null, bool isDescending = false, params Expression<Func<T, object>>[] includes);
+        Task<List<T>> FindAsync(Expression<Func<T, bool>> query, Expression<Func<T, object>> orderBy = null, bool isDescending = false, params Expression<Func<T, object>>[] includes);
         void Add(T entity);
         Task AddAsync(T entity);
         void Update(T entity);

@@ -3,9 +3,9 @@ using feed.Infrastructure.Repositories.Interfaces;
 
 namespace feed.Infrastructure.Repositories.Implements
 {
-    public class PostRepository : Repository<Post>, IPostRepository
+    public class PostLikeRepository : Repository<PostLike>, IPostLikeRepository
     {
-        public PostRepository(FeedDbContext context) : base(context)
+        public PostLikeRepository(FeedDbContext context) : base(context)
         {
 
         }

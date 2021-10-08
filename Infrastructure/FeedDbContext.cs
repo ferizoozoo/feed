@@ -1,3 +1,6 @@
+using System.Net;
+using System;
+using System.Numerics;
 using System.Reflection.Metadata;
 using Microsoft.EntityFrameworkCore;
 using feed.Models;
@@ -12,5 +15,12 @@ namespace feed.Infrastructure
 
         public DbSet<User> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<PostLike> PostLikes { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PostLike>()
+                .HasKey(pl => new { pl.UserId, pl.PostId });
+        }
     }
 }

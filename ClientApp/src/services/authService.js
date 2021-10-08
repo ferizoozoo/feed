@@ -1,4 +1,5 @@
 import customFetch from "../utilities/interceptor";
+import { parseJwt } from "../utilities/jwtParse";
 
 export default class authService {
   static async login(credentials) {
@@ -19,6 +20,10 @@ export default class authService {
 
   static logout() {
     localStorage.removeItem("user");
+  }
+
+  static getUser() {
+    return parseJwt(localStorage.getItem("user"));
   }
 
   static async register(credentials) {

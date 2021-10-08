@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using feed.Infrastructure.Repositories.Interfaces;
+using feed.Common;
 
 namespace feed.Infrastructure.Repositories.Implements
 {
@@ -17,56 +18,48 @@ namespace feed.Infrastructure.Repositories.Implements
             _entitySet = context.Set<T>();
         }
 
-        // TODO: Should implement multiple includes later (params Expression<Func<TEntity, object>>[] includes)
         public T GetById(int id)
         {
             return _entitySet.Find(id);
         }
 
-        // TODO: Should implement multiple includes later
         public async Task<T> GetByIdAsync(int id)
         {
             return await _entitySet.FindAsync(id);
         }
 
-        // TODO: Should implement multiple includes later
-        public List<T> GetAll(Expression<Func<T, object>> orderBy = null, bool isDescending = false)
+        public List<T> GetAll(Expression<Func<T, object>> orderBy = null, bool isDescending = false, params Expression<Func<T, object>>[] includes)
         {
             var queryable = isDescending ? _entitySet.OrderByDescending(orderBy) : _entitySet.OrderByDescending(orderBy);
-            return queryable.ToList();
+            return queryable.IncludeMultiple(includes).ToList();
         }
 
-        // TODO: Should implement multiple includes later
-        public async Task<List<T>> GetAllAsync(Expression<Func<T, object>> orderBy = null, bool isDescending = false)
+        public async Task<List<T>> GetAllAsync(Expression<Func<T, object>> orderBy = null, bool isDescending = false, params Expression<Func<T, object>>[] includes)
         {
             var queryable = isDescending ? _entitySet.OrderByDescending(orderBy) : _entitySet.OrderByDescending(orderBy);
-            return await queryable.ToListAsync();
+            return await queryable.IncludeMultiple(includes).ToListAsync();
         }
 
-        // TODO: Should implement multiple includes later
-        public T FirstOrDefault(Expression<Func<T, bool>> query)
+        public T FirstOrDefault(Expression<Func<T, bool>> query, params Expression<Func<T, object>>[] includes)
         {
-            return _entitySet.Where(query).FirstOrDefault();
+            return _entitySet.IncludeMultiple(includes).Where(query).FirstOrDefault();
         }
 
-        // TODO: Should implement multiple includes later
-        public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> query)
+        public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> query, params Expression<Func<T, object>>[] includes)
         {
-            return await _entitySet.Where(query).FirstOrDefaultAsync();
+            return await _entitySet.IncludeMultiple(includes).Where(query).FirstOrDefaultAsync();
         }
 
-        // TODO: Should implement multiple includes later
-        public List<T> Find(Expression<Func<T, bool>> query, Expression<Func<T, object>> orderBy = null, bool isDescending = false)
+        public List<T> Find(Expression<Func<T, bool>> query, Expression<Func<T, object>> orderBy = null, bool isDescending = false, params Expression<Func<T, object>>[] includes)
         {
             var queryable = isDescending ? _entitySet.Where(query).OrderByDescending(orderBy) : _entitySet.Where(query).OrderBy(orderBy);
-            return queryable.ToList();
+            return queryable.IncludeMultiple(includes).ToList();
         }
 
-        // TODO: Should implement multiple includes later
-        public async Task<List<T>> FindAsync(Expression<Func<T, bool>> query, Expression<Func<T, object>> orderBy = null, bool isDescending = false)
+        public async Task<List<T>> FindAsync(Expression<Func<T, bool>> query, Expression<Func<T, object>> orderBy = null, bool isDescending = false, params Expression<Func<T, object>>[] includes)
         {
             var queryable = isDescending ? _entitySet.Where(query).OrderByDescending(orderBy) : _entitySet.Where(query).OrderBy(orderBy);
-            return await queryable.ToListAsync();
+            return await queryable.IncludeMultiple(includes).ToListAsync();
         }
 
         public void Add(T entity)
