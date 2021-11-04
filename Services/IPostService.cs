@@ -8,7 +8,7 @@ namespace feed.Services
     public interface IPostService
     {
         Task<List<Post>> GetListOfAllPosts();
-        Task<List<PostDto>> GetListOfAllPostsAndLikesByUserId(int userId);
+        Task<List<PostDto>> GetPostsWithLikeCountAndLikedByUser(int? userId);
         Task<int> SendPost(SendPostDto model);
         Task<bool> DeletePost(int postId);
         Task<int> LikePost(int userId, int PostId);

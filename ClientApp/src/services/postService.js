@@ -16,11 +16,19 @@ export default class postService {
     );
   }
 
-  static async likePost(like) {
+  static async GetPostsWithLikeCountAndLikedByUser(userId = null) {
     return await customFetch(
-      "POST",
-      "https://localhost:45654/post/LikePost",
-      like
+      "GET",
+      `https://localhost:45654/post/GetPostsWithLikeCountAndLikedByUser?userId=${
+        userId ? userId : ""
+      }`
     );
+  }
+
+  static async likePost(userId, postId) {
+    return await customFetch("POST", "https://localhost:45654/post/LikePost", {
+      userId,
+      postId,
+    });
   }
 }

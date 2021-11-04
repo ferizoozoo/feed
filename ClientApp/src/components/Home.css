@@ -15,13 +15,28 @@
 
 .item {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
   width: 80%;
   border-bottom: 1px solid gray;
   margin: auto;
   padding: 1rem;
+}
+
+.like {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  float: right;
+}
+
+.likeCount {
+  margin: 0 5px;
+}
+
+.likedByUser {
 }
 
 .item:hover {

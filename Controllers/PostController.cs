@@ -33,6 +33,12 @@ namespace feed.Controllers
             return Ok(await _postService.GetListOfAllPosts());
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetPostsWithLikeCountAndLikedByUser(int? userId)
+        {
+            return Ok(await _postService.GetPostsWithLikeCountAndLikedByUser(userId));
+        }
+
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> SendPost(SendPostDto model)
@@ -65,11 +71,11 @@ namespace feed.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> LikePost(int userId, int postId)
+        public async Task<IActionResult> LikePost(PostLikingDto likeModel)
         {
             try
             {
-                return Ok(await _postService.LikePost(userId, postId));
+                return Ok(await _postService.LikePost(likeModel.UserId, likeModel.PostId));
             }
             catch (Exception e)
             {

@@ -23,7 +23,9 @@ export default class authService {
   }
 
   static getUser() {
-    return parseJwt(localStorage.getItem("user"));
+    const userToken = localStorage.getItem("user");
+    if (userToken) return parseJwt(userToken);
+    else return null;
   }
 
   static async register(credentials) {

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace feed.Models
 {
@@ -8,8 +7,7 @@ namespace feed.Models
         public int Id { get; set; }
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
-        public bool IsLikedByUser { get; set; }
-
-        public ICollection<PostLike> Likes { get; set; }
+        public int LikedByUser { get; set; }
+        public int LikeCount { get; set; }
     }
 }

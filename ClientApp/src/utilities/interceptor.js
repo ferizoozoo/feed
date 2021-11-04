@@ -4,7 +4,7 @@ function getTokenHeader() {
   else return "";
 }
 
-export default async function customFetch(verb, url, dataSet) {
+export default async function customFetch(verb, url, dataSet = null) {
   const token = getTokenHeader();
 
   const request = {

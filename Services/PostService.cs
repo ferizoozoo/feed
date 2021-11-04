@@ -25,10 +25,9 @@ namespace feed.Services
             return await _uow.PostRepository.GetAllAsync(orderBy: x => x.CreatedAt, isDescending: true);
         }
 
-        // TODO: Think a way to have an efficient query for getting posts with like counts
-        public async Task<List<PostDto>> GetListOfAllPostsAndLikesByUserId(int userId)
+        public async Task<List<PostDto>> GetPostsWithLikeCountAndLikedByUser(int? userId)
         {
-            return await Task.Run(() => new List<PostDto>());
+            return await _uow.PostRepository.GetPostsWithLikeCountAndLikedByUser(userId);
         }
 
         public async Task<int> SendPost(SendPostDto model)
@@ -60,10 +59,11 @@ namespace feed.Services
             var user = await _uow.UserRepository.GetByIdAsync(userId);
             var post = await _uow.PostRepository.GetByIdAsync(postId);
 
-            if (user is null && post is null) return 0;
+            if (user is null && post is null) return -1;
 
             #region If exists a like record in the table, delete it, else add new like record
-            var like = await _uow.PostLikeRepository.FirstOrDefaultAsync(pl => pl.UserId == user.Id);
+            var like = await _uow.PostLikeRepository.FirstOrDefaultAsync(
+                pl => pl.UserId == user.Id && pl.PostId == postId);
 
             if (like is not null)
             {

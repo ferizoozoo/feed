@@ -21,6 +21,8 @@ namespace feed.Infrastructure
         {
             modelBuilder.Entity<PostLike>()
                 .HasKey(pl => new { pl.UserId, pl.PostId });
+
+            modelBuilder.Entity<PostDto>().HasNoKey().ToView(null);
         }
     }
 }
