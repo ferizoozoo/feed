@@ -1,3 +1,4 @@
+using System.Net.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using feed.Infrastructure;
+using feed.Infrastructure.Hubs;
 using feed.Infrastructure.UnitOfWork.Interfaces;
 using feed.Infrastructure.UnitOfWork.Implements;
 using feed.Services;
@@ -41,6 +43,8 @@ namespace feed
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<IJwtService, JwtService>();
+
+            services.AddSignalR();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -78,6 +82,8 @@ namespace feed
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+
+                endpoints.MapHub<NotificationHub>("/hubs/notificationHub");    
             });
 
             app.UseSpa(spa =>
