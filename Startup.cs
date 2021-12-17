@@ -1,3 +1,4 @@
+using System.Runtime.Serialization;
 using System.Net.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +12,7 @@ using feed.Infrastructure;
 using feed.Infrastructure.Hubs;
 using feed.Infrastructure.UnitOfWork.Interfaces;
 using feed.Infrastructure.UnitOfWork.Implements;
+using feed.Infrastructure.Email;
 using feed.Services;
 using feed.Middlewares;
 
@@ -28,6 +30,8 @@ namespace feed
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(Configuration.GetSection("EmailConf").Get<EmailConf>());
+
             services.AddDbContext<FeedDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
 
@@ -43,6 +47,8 @@ namespace feed
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<IJwtService, JwtService>();
+
+            services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddSignalR();
 
