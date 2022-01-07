@@ -2,31 +2,22 @@ import customFetch from "../utilities/interceptor";
 
 export default class postService {
   static async sendPost(post) {
-    return await customFetch(
-      "POST",
-      "https://localhost:45654/post/SendPost",
-      post
-    );
+    return await customFetch("POST", "post/SendPost", post);
   }
 
   static async getListOfAllPosts() {
-    return await customFetch(
-      "GET",
-      "https://localhost:45654/post/GetListOfAllPosts"
-    );
+    return await customFetch("GET", "post/GetListOfAllPosts");
   }
 
   static async GetPostsWithLikeCountAndLikedByUser(userId = null) {
     return await customFetch(
       "GET",
-      `https://localhost:45654/post/GetPostsWithLikeCountAndLikedByUser?userId=${
-        userId ? userId : ""
-      }`
+      `post/GetPostsWithLikeCountAndLikedByUser?userId=${userId ? userId : ""}`
     );
   }
 
   static async likePost(userId, postId) {
-    return await customFetch("POST", "https://localhost:45654/post/LikePost", {
+    return await customFetch("POST", "post/LikePost", {
       userId,
       postId,
     });

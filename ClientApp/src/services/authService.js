@@ -3,11 +3,7 @@ import { parseJwt } from "../utilities/jwtParse";
 
 export default class authService {
   static async login(credentials) {
-    const res = await customFetch(
-      "POST",
-      "https://localhost:45654/user/login",
-      credentials
-    );
+    const res = await customFetch("POST", "user/login", credentials);
 
     const token = await res.json();
 
@@ -29,10 +25,6 @@ export default class authService {
   }
 
   static async register(credentials) {
-    return await customFetch(
-      "POST",
-      "https://localhost:45654/user/register",
-      credentials
-    );
+    return await customFetch("POST", "user/register", credentials);
   }
 }

@@ -1,6 +1,7 @@
 {
   "name": "feed",
   "version": "0.1.0",
+  "proxy": "https://localhost:45654/",
   "private": true,
   "dependencies": {
     "bootstrap": "^4.1.3",
