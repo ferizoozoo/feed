@@ -78,7 +78,7 @@ export const NavMenu = (props) => {
                 <NavLink
                   tag={Link}
                   className="text-dark"
-                  to="/user/login"
+                  to="/"
                   onClick={_handleLogout}
                 >
                   Logout

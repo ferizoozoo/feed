@@ -41,11 +41,5 @@ namespace feed.Controllers
 
             return Ok(token);    
         }
-
-        // [HttpPost]
-        // public async Task<IActionResult> Logout()
-        // {
-        //     return Ok();
-        // }
     }
 }
