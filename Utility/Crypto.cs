@@ -7,9 +7,18 @@ namespace feed.Utility
     {
         public static string GenerateSha256HashOfString(string s)
         {
-            byte[] stringBytes = Encoding.ASCII.GetBytes(s);
+            byte[] stringBytes = Encoding.UTF8.GetBytes(s);
             HashAlgorithm sha = SHA256.Create();
-            return Encoding.ASCII.GetString(sha.ComputeHash(stringBytes));
+            byte[] hashedData = sha.ComputeHash(stringBytes);
+            
+            var sBuilder = new StringBuilder();
+
+            for (int i = 0; i < hashedData.Length; i++)
+            {
+                sBuilder.Append(hashedData[i].ToString("x2"));
+            }
+
+            return sBuilder.ToString();
         }
     }
 }
