@@ -9,6 +9,7 @@ namespace feed.Infrastructure.UnitOfWork.Interfaces
         IUserRepository UserRepository { get; }
         IPostRepository PostRepository { get; }
         IPostLikeRepository PostLikeRepository { get; }
+        INotificationRepository NotificationRepository { get; }
         
         int Commit();
         Task<int> CommitAsync();

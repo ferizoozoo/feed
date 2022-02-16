@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using System;
 using feed.Enums;
 
-namespace feed.Infrastructure.Notification.Interfaces
+namespace feed.Infrastructure.Notifications.Interfaces
 {
     public interface INotificationManager
     {

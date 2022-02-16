@@ -1,13 +1,13 @@
 using System.Runtime.CompilerServices;
 using System.Reflection.Metadata;
+using feed.Models;
 using System.Threading.Tasks;
 using System;
-using feed.Infrastructure.Notification.Interfaces;
+using feed.Infrastructure.Notifications.Interfaces;
 using feed.Infrastructure.UnitOfWork.Interfaces;
 using feed.Enums;
-using feed.Models;
 
-namespace feed.Infrastructure.Notification.Implements
+namespace feed.Infrastructure.Notifications.Implements
 {
     public class NotificationManager : INotificationManager
     {
