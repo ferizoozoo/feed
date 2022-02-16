@@ -21,11 +21,13 @@ namespace feed.Infrastructure.UnitOfWork.Implements
             UserRepository = new UserRepository(_context);
             PostRepository = new PostRepository(_context);
             PostLikeRepository = new PostLikeRepository(_context);
+            NotificationRepository = new NotificationRepository(_context);
         }
 
         public IUserRepository UserRepository { get; }
         public IPostRepository PostRepository { get; }
         public IPostLikeRepository PostLikeRepository { get; }
+        public INotificationRepository NotificationRepository { get; }
 
         public int Commit()
         {

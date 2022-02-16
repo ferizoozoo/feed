@@ -1,12 +1,39 @@
+using System.Runtime.CompilerServices;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using System;
 using feed.Infrastructure.Notification.Interfaces;
+using feed.Infrastructure.UnitOfWork.Interfaces;
 using feed.Enums;
+using feed.Models;
 
 namespace feed.Infrastructure.Notification.Implements
 {
     public class NotificationManager : INotificationManager
     {
+        private readonly IUnitOfWork _uow;
+
+        public NotificationManager(IUnitOfWork uow)
+        {
+            _uow = uow;
+        }
+
+        private async Task<int> SaveNotification(string content, int receiverId)
+        {
+            var notification = new Notification
+            {
+                ReceiverId = receiverId,
+                Seen = false,
+                Content = content,
+                CreatedAt = DateTime.Now
+            };
+
+            await _uow.NotificationRepository.AddAsync(notification);
+            await _uow.CommitAsync();
+
+            return notification.Id;
+        }
+
         public async Task<bool> SendNotification(string content, int receiverId, int senderId, NotificationType notifType)
         {
             // Another way to use these different strategies, is to define an IStrategy and let them implement
