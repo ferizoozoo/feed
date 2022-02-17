@@ -15,6 +15,7 @@ using feed.Infrastructure.UnitOfWork.Implements;
 using feed.Infrastructure.Email;
 using feed.Services;
 using feed.Middlewares;
+using Microsoft.OpenApi.Models;
 
 namespace feed
 {
@@ -53,6 +54,16 @@ namespace feed
 
             services.AddSignalR();
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "feed",
+                    Description = "A simple feed app",
+                });
+            });
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -81,6 +92,16 @@ namespace feed
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.)
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = "";
+            });
 
             app.UseRouting();
 
