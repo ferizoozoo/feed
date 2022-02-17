@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using feed.Infrastructure;
 
 namespace feed.Migrations
 {
     [DbContext(typeof(FeedDbContext))]
-    partial class FeedDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220217134828_AddNotification")]
+    partial class AddNotification
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,24 +64,6 @@ namespace feed.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Posts");
-                });
-
-            modelBuilder.Entity("feed.Models.PostDto", b =>
-                {
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LikeCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LikedByUser")
-                        .HasColumnType("int");
                 });
 
             modelBuilder.Entity("feed.Models.PostLike", b =>
