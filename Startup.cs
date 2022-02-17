@@ -47,6 +47,7 @@ namespace feed
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<IJwtService, JwtService>();
+            services.AddTransient<INotificationService, NotificationService>();
 
             services.AddTransient<IEmailSender, EmailSender>();
 
