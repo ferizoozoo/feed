@@ -19,7 +19,7 @@ namespace feed.Services
             _uow = uow;
         }
 
-        public Task<List<Notification>> GetNotificationsByUserId(int userId, int? pageNumber, int? pageSize)
+        public async Task<List<Notification>> GetNotificationsByUserId(int userId, int? pageNumber, int? pageSize)
         {
             return await _uow.NotificationRepository.GetNotificationsByUserId(userId, pageNumber, pageSize);
         }

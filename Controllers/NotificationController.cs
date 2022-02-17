@@ -30,7 +30,7 @@ namespace feed.Controllers
         [Authorize]
         public async Task<IActionResult> GetNotificationsByUserId(int userId, int? pageNumber, int? pageSize)
         {
-            return Ok(await _notificationService.GetNotificationsByUserId());
+            return Ok(await _notificationService.GetNotificationsByUserId(userId, pageNumber, pageSize));
         }
     }
 }

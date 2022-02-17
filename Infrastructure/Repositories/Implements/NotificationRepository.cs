@@ -1,7 +1,10 @@
-using System.Xml.Linq;
-using System.Security.Cryptography.X509Certificates;
+using System.Security.AccessControl;
 using feed.Models;
 using feed.Infrastructure.Repositories.Interfaces;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace feed.Infrastructure.Repositories.Implements
 {
@@ -16,8 +19,8 @@ namespace feed.Infrastructure.Repositories.Implements
         public async Task<List<Notification>> GetNotificationsByUserId(int userId, int? pageNumber, int? pageSize)
         {
             return await _context.Set<Notification>().Where(x => x.ReceiverId == userId)
-                            .Skip((pageNumber - 1) * pageSize)
-                            .Take(pageSize);
+                            .Skip(((int)pageNumber - 1) * (int)pageSize)
+                            .Take((int)pageSize).ToListAsync();
         }
     }
 }
