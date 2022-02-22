@@ -1,0 +1,18 @@
+.notification {
+  border: 2px solid #000;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 10px;
+  min-width: 500px;
+  display: flex;
+  flex-direction: row;
+}
+
+.content {
+  width: 80%;
+}
+
+.createdAt {
+  width: 20%;
+  text-align: end;
+}

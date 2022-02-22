@@ -27,7 +27,6 @@ export default class App extends Component {
           <Route exact path="/" component={Home} />
           <ProtectedRoute exact path="/sendPost" component={SendPost} />
           <ProtectedRoute
-            exact
             path="/notifications"
             component={NotificationsRoute}
           />

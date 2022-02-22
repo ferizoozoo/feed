@@ -7,7 +7,7 @@ const NotificationsRoute = () => {
 
   return (
     <Switch>
-      <Route exact path={`/notifications/he`} component={NotificationsPage} />
+      <Route exact path={`/notifications/list`} component={NotificationsPage} />
     </Switch>
   );
 };

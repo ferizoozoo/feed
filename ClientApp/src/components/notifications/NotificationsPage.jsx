@@ -9,9 +9,17 @@ const NotificationsPage = () => {
   const user = useRecoilValue(userAtom);
 
   const _loadData = async () => {
-    debugger;
-    const res = await notificationService.getNotificationsByUserId(user.id);
-    setNotifications(await res.json());
+    const res = await notificationService.getNotificationsByUserId(
+      user.id,
+      1,
+      100
+    );
+    const data = await res.json();
+    setNotifications(data);
+  };
+
+  const _markNotificationAsSeen = (notificationId) => {
+    //TODO: Create a MarkAsSeen service
   };
 
   useEffect(() => {
@@ -19,9 +27,20 @@ const NotificationsPage = () => {
   }, []);
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       {notifications?.map((notification, index) => (
-        <Notification key={index} data={notification} />
+        <Notification
+          key={index}
+          data={notification}
+          onClick={() => _markNotificationAsSeen(notification.id)}
+        />
       ))}
     </div>
   );
