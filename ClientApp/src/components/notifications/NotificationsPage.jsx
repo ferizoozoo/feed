@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import notificationService from "../../services/notificationService";
 import userAtom from "../../states/userAtom";
+import Notification from "./Notification";
 
 const NotificationsPage = () => {
   const [notifications, setNotifications] = useState([]);
   const user = useRecoilValue(userAtom);
 
   const _loadData = async () => {
+    debugger;
     const res = await notificationService.getNotificationsByUserId(user.id);
     setNotifications(await res.json());
   };

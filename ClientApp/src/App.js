@@ -15,6 +15,7 @@ import {
 } from "recoil";
 
 import "./custom.css";
+import NotificationsRoute from "./components/notifications";
 
 export default class App extends Component {
   static displayName = App.name;
@@ -25,6 +26,11 @@ export default class App extends Component {
         <Layout>
           <Route exact path="/" component={Home} />
           <ProtectedRoute exact path="/sendPost" component={SendPost} />
+          <ProtectedRoute
+            exact
+            path="/notifications"
+            component={NotificationsRoute}
+          />
           <Route exact path="/user/login" component={Login} />
           <Route exact path="/user/register" component={SignUp} />
         </Layout>
