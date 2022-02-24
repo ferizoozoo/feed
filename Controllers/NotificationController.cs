@@ -32,5 +32,12 @@ namespace feed.Controllers
         {
             return Ok(await _notificationService.GetNotificationsByUserId(userId, pageNumber, pageSize));
         }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> MarkNotificationAsSeen(int notificationId)
+        {
+            return Ok(await _notificationService.MarkNotificationAsSeen(notificationId));
+        }
     }
 }

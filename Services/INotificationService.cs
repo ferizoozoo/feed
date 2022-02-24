@@ -7,5 +7,6 @@ namespace feed.Services
     public interface INotificationService
     {
         Task<List<Notification>> GetNotificationsByUserId(int userId, int? pageNumber, int? pageSize);
+        Task<bool> MarkNotificationAsSeen(int notificationId);
     }
 }

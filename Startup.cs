@@ -12,6 +12,8 @@ using feed.Infrastructure;
 using feed.Infrastructure.Hubs;
 using feed.Infrastructure.UnitOfWork.Interfaces;
 using feed.Infrastructure.UnitOfWork.Implements;
+using feed.Infrastructure.Notifications.Interfaces;
+using feed.Infrastructure.Notifications.Implements;
 using feed.Infrastructure.Email;
 using feed.Services;
 using feed.Middlewares;
@@ -49,6 +51,8 @@ namespace feed
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<IJwtService, JwtService>();
             services.AddTransient<INotificationService, NotificationService>();
+
+            services.AddTransient<INotificationManager, NotificationManager>();
 
             services.AddTransient<IEmailSender, EmailSender>();
 

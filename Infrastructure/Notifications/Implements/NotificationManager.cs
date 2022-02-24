@@ -1,3 +1,5 @@
+using System.Net.Mail;
+using System.Collections.Specialized;
 using System.Runtime.CompilerServices;
 using System.Reflection.Metadata;
 using feed.Models;
@@ -50,6 +52,17 @@ namespace feed.Infrastructure.Notifications.Implements
                 default: 
                     return await Task.Run(() => false);            
             }
+        }
+
+        public async Task<bool> MarkNotificationAsSeen(int notificationId)
+        {
+            var notification = await _uow.NotificationRepository.GetByIdAsync(notificationId);
+            if (notification == null)
+                return false;
+            notification.Seen = true;
+            _uow.NotificationRepository.Update(notification);
+            await _uow.CommitAsync();
+            return true;
         }
     }
 }
