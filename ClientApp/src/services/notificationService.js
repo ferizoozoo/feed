@@ -7,4 +7,11 @@ export default class notificationService {
       `notification/GetNotificationsByUserId?userId=${userId}&pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
   }
+
+  static async markNotificationAsSeen(notificationId) {
+    return await customFetch(
+      "GET",
+      `notification/MarkNotificationAsSeen?notificationId=${notificationId}`
+    );
+  }
 }

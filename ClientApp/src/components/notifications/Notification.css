@@ -6,6 +6,7 @@
   min-width: 500px;
   display: flex;
   flex-direction: row;
+  cursor: pointer;
 }
 
 .content {

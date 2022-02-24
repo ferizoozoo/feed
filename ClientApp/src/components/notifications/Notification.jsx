@@ -5,8 +5,15 @@ import notificationService from "../../services/notificationService";
 import "./Notification.css";
 
 const Notification = (props) => {
-  const { data } = props;
-  const { content, createdAt, seen } = data;
+  const { data, loadData } = props;
+  const { content, createdAt, seen, id } = data;
+
+  const _markNotificationAsSeen = async (notificationId) => {
+    const res = await notificationService.markNotificationAsSeen(
+      notificationId
+    );
+    loadData();
+  };
 
   return (
     <div
@@ -14,6 +21,7 @@ const Notification = (props) => {
       style={
         seen ? { backgroundColor: "#fff" } : { backgroundColor: "#9f9d9d61" }
       }
+      onClick={() => _markNotificationAsSeen(id)}
     >
       <div className="content">
         <p>{content}</p>

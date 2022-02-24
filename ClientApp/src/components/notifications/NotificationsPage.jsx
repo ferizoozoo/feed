@@ -18,10 +18,6 @@ const NotificationsPage = () => {
     setNotifications(data);
   };
 
-  const _markNotificationAsSeen = (notificationId) => {
-    //TODO: Create a MarkAsSeen service
-  };
-
   useEffect(() => {
     _loadData();
   }, []);
@@ -36,11 +32,7 @@ const NotificationsPage = () => {
       }}
     >
       {notifications?.map((notification, index) => (
-        <Notification
-          key={index}
-          data={notification}
-          onClick={() => _markNotificationAsSeen(notification.id)}
-        />
+        <Notification key={index} data={notification} loadData={_loadData} />
       ))}
     </div>
   );
