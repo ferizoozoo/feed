@@ -7,12 +7,16 @@ import Notification from "./Notification";
 const NotificationsPage = () => {
   const [notifications, setNotifications] = useState([]);
   const user = useRecoilValue(userAtom);
+  const [pageFilter, setPageFilter] = useState({
+    pageSize: 1,
+    pageNumber: 100,
+  });
 
   const _loadData = async () => {
     const res = await notificationService.getNotificationsByUserId(
       user.id,
-      1,
-      100
+      pageFilter.pageSize,
+      pageFilter.pageNumber
     );
     const data = await res.json();
     setNotifications(data);
