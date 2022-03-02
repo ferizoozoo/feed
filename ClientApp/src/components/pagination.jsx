@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import "./pagination.css";
+
 const Pagination = (props) => {
   const { pageNumber, pageSize, totalRecords, onPageClick } = props;
   const [currentPage, setCurrentPage] = useState(pageNumber);
