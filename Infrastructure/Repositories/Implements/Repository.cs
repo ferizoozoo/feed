@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using feed.Infrastructure.Repositories.Interfaces;
 using feed.Common;
+using feed.Infrastructure.Repositories;
 
 namespace feed.Infrastructure.Repositories.Implements
 {
@@ -34,10 +35,44 @@ namespace feed.Infrastructure.Repositories.Implements
             return queryable.IncludeMultiple(includes).ToList();
         }
 
+        public PageResult<T> GetAllByPage(PageParameters pageParameters, Expression<Func<T, object>> orderBy = null, bool isDescending = false, params Expression<Func<T, object>>[] includes)
+        {
+            var queryable = _entitySet.IncludeMultiple(includes).AsNoTracking();
+
+            var totalCount = queryable.Count();
+            queryable = queryable.Skip((pageParameters.PageNumber - 1) * pageParameters.PageSize)
+                            .Take(pageParameters.PageSize);
+
+            return new PageResult<T> 
+            {
+                TotalRecords = totalCount,
+                PageNumber = pageParameters.PageNumber,
+                PageSize = pageParameters.PageSize,
+                Result = queryable.ToList()
+            };                
+        }
+
         public async Task<List<T>> GetAllAsync(Expression<Func<T, object>> orderBy = null, bool isDescending = false, params Expression<Func<T, object>>[] includes)
         {
             var queryable = isDescending ? _entitySet.OrderByDescending(orderBy) : _entitySet.OrderByDescending(orderBy);
             return await queryable.IncludeMultiple(includes).ToListAsync();
+        }
+
+        public async Task<PageResult<T>> GetAllByPageAsync(PageParameters pageParameters, Expression<Func<T, object>> orderBy = null, bool isDescending = false, params Expression<Func<T, object>>[] includes)
+        {
+            var queryable = _entitySet.IncludeMultiple(includes).AsNoTracking();
+
+            var totalCount = await queryable.CountAsync();
+            queryable = queryable.Skip((pageParameters.PageNumber - 1) * pageParameters.PageSize)
+                            .Take(pageParameters.PageSize);
+
+            return new PageResult<T> 
+            {
+                TotalRecords = totalCount,
+                PageNumber = pageParameters.PageNumber,
+                PageSize = pageParameters.PageSize,
+                Result = await queryable.ToListAsync()
+            };  
         }
 
         public T FirstOrDefault(Expression<Func<T, bool>> query, params Expression<Func<T, object>>[] includes)
@@ -56,10 +91,44 @@ namespace feed.Infrastructure.Repositories.Implements
             return queryable.IncludeMultiple(includes).ToList();
         }
 
+        public PageResult<T> FindByPage(PageParameters pageParameters, Expression<Func<T, bool>> query, Expression<Func<T, object>> orderBy = null, bool isDescending = false, params Expression<Func<T, object>>[] includes)
+        {
+            var queryable = _entitySet.Where(query).IncludeMultiple(includes).AsNoTracking();
+
+            var totalCount = queryable.Count();
+            queryable = queryable.Skip((pageParameters.PageNumber - 1) * pageParameters.PageSize)
+                            .Take(pageParameters.PageSize);
+
+            return new PageResult<T> 
+            {
+                TotalRecords = totalCount,
+                PageNumber = pageParameters.PageNumber,
+                PageSize = pageParameters.PageSize,
+                Result = queryable.ToList()
+            }; 
+        }
+
         public async Task<List<T>> FindAsync(Expression<Func<T, bool>> query, Expression<Func<T, object>> orderBy = null, bool isDescending = false, params Expression<Func<T, object>>[] includes)
         {
             var queryable = isDescending ? _entitySet.Where(query).OrderByDescending(orderBy) : _entitySet.Where(query).OrderBy(orderBy);
             return await queryable.IncludeMultiple(includes).ToListAsync();
+        }
+
+        public async Task<PageResult<T>> FindByPageAsync(PageParameters pageParameters, Expression<Func<T, bool>> query, Expression<Func<T, object>> orderBy = null, bool isDescending = false, params Expression<Func<T, object>>[] includes)
+        {
+            var queryable = _entitySet.Where(query).IncludeMultiple(includes).AsNoTracking();
+
+            var totalCount = await queryable.CountAsync();
+            queryable = queryable.Skip((pageParameters.PageNumber - 1) * pageParameters.PageSize)
+                            .Take(pageParameters.PageSize);
+
+            return new PageResult<T> 
+            {
+                TotalRecords = totalCount,
+                PageNumber = pageParameters.PageNumber,
+                PageSize = pageParameters.PageSize,
+                Result = await queryable.ToListAsync()
+            }; 
         }
 
         public void Add(T entity)
