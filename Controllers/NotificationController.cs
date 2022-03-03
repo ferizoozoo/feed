@@ -12,6 +12,7 @@ using feed.Models;
 using feed.Filters;
 using feed.Services;
 using Microsoft.AspNetCore.Http;
+using feed.Infrastructure.Repositories;
 
 namespace feed.Controllers
 {
@@ -31,6 +32,20 @@ namespace feed.Controllers
         public async Task<IActionResult> GetNotificationsByUserId(int userId, int? pageNumber, int? pageSize)
         {
             return Ok(await _notificationService.GetNotificationsByUserId(userId, pageNumber, pageSize));
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetAllNotificationsByPage([FromQuery] PageParameters pageParameters)
+        {
+            return Ok(await _notificationService.GetAllNotificationsByPage(pageParameters));
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetNotificationsByReceiverIdByPage([FromQuery] int receiverId, [FromQuery] PageParameters pageParameters)
+        {
+            return Ok(await _notificationService.GetNotificationsByReceiverIdByPage(receiverId, pageParameters));
         }
 
         [HttpGet]
