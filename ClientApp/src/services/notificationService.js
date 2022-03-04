@@ -1,10 +1,10 @@
 import customFetch from "../utilities/interceptor";
 
 export default class notificationService {
-  static async getNotificationsByUserId(userId, pageNumber, pageSize) {
+  static async getNotificationsByUserIdByPage(userId, pageParameters) {
     return await customFetch(
       "GET",
-      `notification/GetNotificationsByUserId?userId=${userId}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+      `notification/GetNotificationsByUserIdByPage?userId=${userId}&pageNumber=${pageParameters.pageNumber}&pageSize=${pageParameters.pageSize}`
     );
   }
 

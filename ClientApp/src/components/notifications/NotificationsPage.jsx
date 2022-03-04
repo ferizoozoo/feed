@@ -7,20 +7,21 @@ import Notification from "./Notification";
 
 const NotificationsPage = () => {
   const [notifications, setNotifications] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
   const user = useRecoilValue(userAtom);
   const [pageFilter, setPageFilter] = useState({
-    pageSize: 2,
+    pageSize: 4,
     pageNumber: 1,
   });
 
   const _loadData = async () => {
-    const res = await notificationService.getNotificationsByUserId(
+    const res = await notificationService.getNotificationsByUserIdByPage(
       user.id,
-      pageFilter.pageNumber,
-      pageFilter.pageSize
+      pageFilter
     );
     const data = await res.json();
-    setNotifications(data);
+    setNotifications(data.result);
+    setTotalCount(data.totalRecords);
   };
 
   const _handlePageChange = (paginationData) => {
@@ -50,7 +51,7 @@ const NotificationsPage = () => {
       <Pagination
         pageNumber={pageFilter.pageNumber}
         pageSize={pageFilter.pageSize}
-        totalRecords={6}
+        totalRecords={totalCount}
         onPageClick={_handlePageChange}
       />
     </div>

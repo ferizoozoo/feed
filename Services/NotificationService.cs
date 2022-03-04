@@ -1,3 +1,4 @@
+using System.Xml.XPath;
 using System.Xml.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Reflection.Metadata;
@@ -25,19 +26,14 @@ namespace feed.Services
             _notificationManager = notificationManager;
         }
 
-        public async Task<List<Notification>> GetNotificationsByUserId(int userId, int? pageNumber, int? pageSize)
+        public async Task<PageResult<Notification>> GetNotificationsByUserIdByPage(int userId, PageParameters pageParameters)
         {
-            return await _uow.NotificationRepository.GetNotificationsByUserId(userId, pageNumber, pageSize);
+            return await _uow.NotificationRepository.FindByPageAsync(pageParameters, x => x.ReceiverId == userId);
         }
 
         public async Task<PageResult<Notification>> GetAllNotificationsByPage(PageParameters pageParameters)
         {
             return await _uow.NotificationRepository.GetAllByPageAsync(pageParameters);
-        }
-        
-        public async Task<PageResult<Notification>> GetNotificationsByReceiverIdByPage(int receiverId, PageParameters pageParameters)
-        {
-            return await _uow.NotificationRepository.FindByPageAsync(pageParameters, x => x.ReceiverId == receiverId);
         }
 
         // Not a good design, that it just passes the work to be done to an another method!

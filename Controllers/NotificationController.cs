@@ -29,9 +29,9 @@ namespace feed.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetNotificationsByUserId(int userId, int? pageNumber, int? pageSize)
+        public async Task<IActionResult> GetNotificationsByUserIdByPage([FromQuery] int userId, [FromQuery] PageParameters pageParameters)
         {
-            return Ok(await _notificationService.GetNotificationsByUserId(userId, pageNumber, pageSize));
+            return Ok(await _notificationService.GetNotificationsByUserIdByPage(userId, pageParameters));
         }
 
         [HttpGet]
@@ -39,13 +39,6 @@ namespace feed.Controllers
         public async Task<IActionResult> GetAllNotificationsByPage([FromQuery] PageParameters pageParameters)
         {
             return Ok(await _notificationService.GetAllNotificationsByPage(pageParameters));
-        }
-
-        [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> GetNotificationsByReceiverIdByPage([FromQuery] int receiverId, [FromQuery] PageParameters pageParameters)
-        {
-            return Ok(await _notificationService.GetNotificationsByReceiverIdByPage(receiverId, pageParameters));
         }
 
         [HttpGet]
