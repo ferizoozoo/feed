@@ -21,6 +21,8 @@ namespace feed.Infrastructure.Repositories.Interfaces
         PageResult<T> FindByPage(PageParameters pageParameters, Expression<Func<T, bool>> query, Expression<Func<T, object>> orderBy = null, bool isDescending = false, params Expression<Func<T, object>>[] includes);
         Task<List<T>> FindAsync(Expression<Func<T, bool>> query, Expression<Func<T, object>> orderBy = null, bool isDescending = false, params Expression<Func<T, object>>[] includes);
         Task<PageResult<T>> FindByPageAsync(PageParameters pageParameters, Expression<Func<T, bool>> query, Expression<Func<T, object>> orderBy = null, bool isDescending = false, params Expression<Func<T, object>>[] includes);
+        Task<int> CountAsync();
+        Task<int> CountAsync(Expression<Func<T, bool>> query);
         void Add(T entity);
         Task AddAsync(T entity);
         void Update(T entity);

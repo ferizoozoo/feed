@@ -131,6 +131,16 @@ namespace feed.Infrastructure.Repositories.Implements
             }; 
         }
 
+        public async Task<int> CountAsync()
+        {
+            return await _entitySet.CountAsync();
+        }
+
+        public async Task<int> CountAsync(Expression<Func<T, bool>> query)
+        {
+            return await _entitySet.Where(query).CountAsync();
+        }
+
         public void Add(T entity)
         {
             _entitySet.Add(entity);
