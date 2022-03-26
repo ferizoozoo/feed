@@ -8,6 +8,13 @@ export default class notificationService {
     );
   }
 
+  static async getUserTotalUnseenNotificationCount(userId) {
+    return await customFetch(
+      "GET",
+      `notification/GetUserTotalUnseenNotificationCount?userId=${userId}`
+    );
+  }
+
   static async markNotificationAsSeen(notificationId) {
     return await customFetch(
       "GET",

@@ -36,6 +36,11 @@ namespace feed.Services
             return await _uow.NotificationRepository.GetAllByPageAsync(pageParameters);
         }
 
+        public async Task<int> GetUserTotalUnseenNotificationCount(int userId)
+        {
+            return await _uow.NotificationRepository.CountAsync(x => x.ReceiverId == userId && !x.Seen);
+        }
+
         // Not a good design, that it just passes the work to be done to an another method!
         public async Task<bool> MarkNotificationAsSeen(int notificationId)
         {

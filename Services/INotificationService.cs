@@ -9,6 +9,7 @@ namespace feed.Services
     {
         Task<PageResult<Notification>> GetNotificationsByUserIdByPage(int userId, PageParameters pageParameters);
         Task<PageResult<Notification>> GetAllNotificationsByPage(PageParameters pageParameters);
+        Task<int> GetUserTotalUnseenNotificationCount(int userId);
         Task<bool> MarkNotificationAsSeen(int notificationId);
     }
 }

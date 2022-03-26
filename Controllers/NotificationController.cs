@@ -43,6 +43,13 @@ namespace feed.Controllers
 
         [HttpGet]
         [Authorize]
+        public async Task<IActionResult> GetUserTotalUnseenNotificationCount(int userId)
+        {
+            return Ok(await _notificationService.GetUserTotalUnseenNotificationCount(userId));
+        }
+
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> MarkNotificationAsSeen(int notificationId)
         {
             return Ok(await _notificationService.MarkNotificationAsSeen(notificationId));
