@@ -32,7 +32,9 @@ const NotificationsPage = () => {
   };
 
   useEffect(() => {
-    _loadData();
+    if (user) {
+      _loadData();
+    }
   }, [pageFilter]);
 
   return (

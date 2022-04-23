@@ -41,7 +41,9 @@ export const NavMenu = (props) => {
   }
 
   useEffect(() => {
-    _getNotificationCount()
+    if (user) {
+      _getNotificationCount()
+    }
   }, [])
 
   return (
